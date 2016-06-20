@@ -1,0 +1,155 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Date
+ *
+ * @ORM\Table(name="course_date")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\DateRepository")
+ */
+class CourseDate
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date", type="date")
+     */
+    private $date;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="start", type="time")
+     */
+    private $start;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="end", type="time")
+     */
+    private $end;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Course", inversedBy="dates")
+     * @ORM\JoinColumn(name="course_id", referencedColumnName="id")
+     * 
+     */
+    private $course;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set date
+     *
+     * @param \DateTime $date
+     * @return CourseDate
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * Get date
+     *
+     * @return \DateTime 
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * Set start
+     *
+     * @param \DateTime $start
+     * @return CourseDate
+     */
+    public function setStart($start)
+    {
+        $this->start = $start;
+
+        return $this;
+    }
+
+    /**
+     * Get start
+     *
+     * @return \DateTime 
+     */
+    public function getStart()
+    {
+        return $this->start;
+    }
+
+    /**
+     * Set end
+     *
+     * @param \DateTime $end
+     * @return CourseDate
+     */
+    public function setEnd($end)
+    {
+        $this->end = $end;
+
+        return $this;
+    }
+
+    /**
+     * Get end
+     *
+     * @return \DateTime 
+     */
+    public function getEnd()
+    {
+        return $this->end;
+    }
+
+    /**
+     * Set course_id
+     *
+     * @param \AppBundle\Entity\Course $courseId
+     * @return CourseDate
+     */
+    public function setCourseId(\AppBundle\Entity\Course $courseId = null)
+    {
+        $this->course_id = $courseId;
+
+        return $this;
+    }
+
+    /**
+     * Get course_id
+     *
+     * @return \AppBundle\Entity\Course 
+     */
+    public function getCourseId()
+    {
+        return $this->course_id;
+    }
+}

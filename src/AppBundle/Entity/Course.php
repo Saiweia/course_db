@@ -1,0 +1,417 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
+
+/**
+ * Course
+ *
+ * @ORM\Table(name="course")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\CourseRepository")
+ */
+class Course
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="number", type="integer", unique=true)
+     * @Assert\NotBlank()
+     */
+    private $number;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=150)
+     * @Assert\NotBlank()
+     */
+    private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="target_group", type="string", length=80)
+     * @Assert\NotBlank(message = "Bitte geben Sie die Zielgruppe an")
+     */
+    private $targetGroup;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="price", type="decimal", precision=7, scale=2)
+     * @Assert\NotBlank()
+     */
+    private $price;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="place", type="string", length=100)
+     * @Assert\NotBlank()
+     */
+    private $place;
+
+    /**
+     * description of course
+     *
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text")
+     * @Assert\NotBlank()
+     */
+    private $description;
+
+    /**
+     * number of places that are already booked in a course
+     * 
+     * @var int
+     *
+     * @ORM\Column(name="booked", type="integer")
+     * @Assert\NotBlank()
+     */
+    private $booked;
+
+    /**
+     * maximum number of places available for a course
+     *
+     * @var int
+     *
+     * @ORM\Column(name="available_place", type="integer")
+     * @Assert\NotBlank(message = "Bitte geben Sie die maximale Kursbelegung an")
+     */
+    private $availablePlaces;
+
+    /**
+    *
+    * @ORM\ManyToOne(targetEntity="Category", inversedBy="courses")
+    * @ORM\JoinColumn(name="categoryId", referencedColumnName="id")
+    * @Assert\NotBlank()
+    */
+    protected $category;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="courses")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @Assert\NotBlank()
+     */
+    protected $user;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Date_Time", mappedBy="course")
+     */
+    protected $dates;
+
+    public function __construct()
+    {
+        $this->dates = new ArrayCollection();
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set category
+     *
+     * @param \AppBundle\Entity\Category $category
+     * @return Course
+     */
+    public function setCategory(\AppBundle\Entity\Category $category = null)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return \AppBundle\Entity\Category 
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \AppBundle\Entity\User $user
+     * @return Course
+     */
+    public function setUser(\AppBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \AppBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set courseNumber
+     *
+     * @param integer $courseNumber
+     * @return Course
+     */
+    public function setCourseNumber($courseNumber)
+    {
+        $this->courseNumber = $courseNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get courseNumber
+     *
+     * @return integer 
+     */
+    public function getCourseNumber()
+    {
+        return $this->courseNumber;
+    }
+
+    /**
+     * Set number
+     *
+     * @param integer $number
+     * @return Course
+     */
+    public function setNumber($number)
+    {
+        $this->number = $number;
+
+        return $this;
+    }
+
+    /**
+     * Get number
+     *
+     * @return integer 
+     */
+    public function getNumber()
+    {
+        return $this->number;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return Course
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set targetGroup
+     *
+     * @param string $targetGroup
+     * @return Course
+     */
+    public function setTargetGroup($targetGroup)
+    {
+        $this->targetGroup = $targetGroup;
+
+        return $this;
+    }
+
+    /**
+     * Get targetGroup
+     *
+     * @return string 
+     */
+    public function getTargetGroup()
+    {
+        return $this->targetGroup;
+    }
+
+    /**
+     * Set price
+     *
+     * @param string $price
+     * @return Course
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Get price
+     *
+     * @return string 
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    /**
+     * Set place
+     *
+     * @param string $place
+     * @return Course
+     */
+    public function setPlace($place)
+    {
+        $this->place = $place;
+
+        return $this;
+    }
+
+    /**
+     * Get place
+     *
+     * @return string 
+     */
+    public function getPlace()
+    {
+        return $this->place;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Course
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set booked
+     *
+     * @param integer $booked
+     * @return Course
+     */
+    public function setBooked($booked)
+    {
+        $this->booked = $booked;
+
+        return $this;
+    }
+
+    /**
+     * Get booked
+     *
+     * @return integer 
+     */
+    public function getBooked()
+    {
+        return $this->booked;
+    }
+
+    /**
+     * Set availablePlaces
+     *
+     * @param integer $availablePlaces
+     * @return Course
+     */
+    public function setAvailablePlaces($availablePlaces)
+    {
+        $this->availablePlaces = $availablePlaces;
+
+        return $this;
+    }
+
+    /**
+     * Get availablePlaces
+     *
+     * @return integer 
+     */
+    public function getAvailablePlaces()
+    {
+        return $this->availablePlaces;
+    }
+
+
+    /**
+     * Add dates
+     *
+     * @param \AppBundle\Entity\Date $dates
+     * @return Course
+     */
+    public function addDate(\AppBundle\Entity\Date $dates)
+    {
+        $this->dates[] = $dates;
+
+        return $this;
+    }
+
+    /**
+     * Remove dates
+     *
+     * @param \AppBundle\Entity\Date $dates
+     */
+    public function removeDate(\AppBundle\Entity\Date $dates)
+    {
+        $this->dates->removeElement($dates);
+    }
+
+    /**
+     * Get dates
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDates()
+    {
+        return $this->dates;
+    }
+}
