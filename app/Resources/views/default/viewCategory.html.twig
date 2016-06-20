@@ -1,0 +1,92 @@
+{% extends "base.html.twig" %}
+
+{% block main_menu_links %}
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="toggle_buttons">
+              <ul class="nav navbar-nav">
+                <li><a href="{{ path('index') }}">Startseite 
+                  <span class="sr-only">(current)</span></a></li>
+                    {% for category in categories %}
+                      <!-- set class active depending on current Category -->
+                      <li {% if currentCat.name == category.name %}class="active"{% endif %}>
+                        <a href="{{ path('app_course_showProgramByCategory', 
+                          {'categoryId': category.id}) }}">
+                          {{category.name}}
+                        </a>
+                      </li>
+                    {% endfor %}
+{% endblock %}
+
+{% block pageTitle %}
+  <h1>Unsere Kursangebote für "{{ currentCat.name }}"</h1>
+  <ol class="breadcrumb">
+    <li><a href="{{ path('app_course_showProgramByCategory') }}">Startseite</a></li>
+    <li class="active">{{ currentCat.name }}</li>
+  </ol>
+{% endblock %} 
+
+{% block leftColumn %}
+  <div class="row">
+    <div class="col-md-6">
+      <div class="jumbotron">
+        {{ parent() }}
+      </div>
+    </div>
+  </div>        
+{% endblock leftColumn %}
+  
+{% block contentDescription %} <!-- decription of category goes here -->
+  Hier kann ein beschreibender Text für die jeweilige Kategorie stehen              
+{% endblock %} 
+
+{% block rightColumn %} <!-- deviding page for layout purposes -->
+  <!-- leave right column empty -->
+{% endblock %} 
+
+{% block wholeColumn %} 
+   <div class="row">
+    <div class="col-sm-12">
+      {{ parent() }}
+    </div>
+  </div>   
+{% endblock %}
+
+{% block foundCourses %}
+  <h2> Es wurden {{ courses|length }} Kurse gefunden </h2>
+{% endblock %} 
+
+{% block wholeColumnSection %}
+  <table class="table table-responsive table-hover table-striped table-bordered"> 
+    {{ parent() }}
+  </table>
+{% endblock %}
+
+{% block tableHeader %}
+  <tr> 
+    <th>Was?</th> 
+    <th>Für wen?</th> 
+    <th>Belegung</th> 
+  </tr>
+{% endblock %}
+
+{% block tableBody %}  <!-- table showing available courses by Category -->
+  <!-- fetching course data from array -->
+  {% for course in courses %}
+    <tr>
+      <td>
+        <a href="{{ path('app_course_showCourseDetailsByCourseId', {'categoryId' : currentCat.id, 'courseId': course.id} ) }}">
+          {{ course.name }}
+        </a>
+      </td>
+      <td>{{ course.targetGroup }}</td> 
+      <!-- set background depending on available course places -->
+      <td {% if course.availablePlaces - course.booked < 1 %} class="danger" 
+          {% elseif 100 * course.booked / course.availablePlaces >= 80 %} class="warning"
+          {% else %} class="success" {% endif %}>
+          noch {{ course.availablePlaces - course.booked }} Plätze frei 
+      </td>
+    </tr> 
+  {% endfor %}
+{% endblock %} 
+     
+  

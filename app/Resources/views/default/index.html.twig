@@ -1,0 +1,21 @@
+{% extends "base.html.twig" %}
+
+{% block main_menu_links %}
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="toggle_buttons">
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="{{ path('index') }}">Startseite 
+                  <span class="sr-only">(current)</span></a></li>
+                    {% for category in categories %}
+                      <li>
+                        <a href="{{ path('app_course_showProgramByCategory', 
+                          {'categoryId': category.id}) }}">
+                          {{category.name}}
+                        </a>
+                      </li>
+                    {% endfor %}
+{% endblock %}
+
+{% block body %}
+    Index page
+{% endblock %}

@@ -1,0 +1,12 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_host: 127.0.0.1
+    database_port: null
+    database_name: course_db
+    database_user: root
+    database_password: null
+    mailer_transport: gmail
+    #mailer_host: 127.0.0.1
+    mailer_user: sylvia.klatt@gmail.com
+    mailer_password: w3fl9mnb
+    secret: aaa07ee27d4127e02a22d24a1d8fd9d27e1d1f48

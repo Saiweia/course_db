@@ -1,0 +1,3 @@
+[2016-06-17 11:58:05] security.DEBUG: Read existing security token from the session. {"key":"_security_main"} []
+[2016-06-17 11:58:05] security.DEBUG: User was reloaded from a user provider. {"username":"renate","provider":"Symfony\\Bridge\\Doctrine\\Security\\User\\EntityUserProvider"} []
+[2016-06-17 11:58:05] security.DEBUG: Stored the security token in the session. {"key":"_security_main"} []

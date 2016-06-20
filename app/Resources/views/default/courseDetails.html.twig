@@ -1,0 +1,99 @@
+{% extends "base.html.twig" %}
+
+{% block main_menu_links %}
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="toggle_buttons">
+              <ul class="nav navbar-nav">
+                <li><a href="{{ path('index') }}">Startseite 
+                  <span class="sr-only">(current)</span></a></li>
+                    {% for category in categories %}
+                      <!-- set class active depending on current Category -->
+                      <li {% if currentCat.name == category.name %}class="active"{% endif %}>
+                        <a href="{{ path('app_course_showProgramByCategory', 
+                          {'categoryId': category.id}) }}">
+                          {{category.name}}
+                        </a>
+                      </li>
+                    {% endfor %}
+{% endblock %}
+
+{% block pageTitle %}
+  <h1>{{ course.name }}</h1>
+  <h2>{{ course.targetGroup }}</h2>
+  <ol class="breadcrumb">
+    <li><a href="{{ path('app_course_showProgramByCategory') }}">Startseite</a></li>
+    <li class="active">{{ currentCat.name }}</li>
+  </ol>
+{% endblock %} 
+
+{% block leftColumn %}
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="jumbotron">
+        {{ parent() }}
+      </div>
+    </div>
+  <!-- row will be closed in rightColumn -->      
+{% endblock leftColumn %}
+  
+{% block leftColumnSection %} <!-- decription goes in here -->
+  Hier steht Beschreibung zum Kurs
+{% endblock %} 
+
+{% block rightColumn %} <!-- deviding page for layout purposes -->
+    <div class="col-sm-6">
+      {{ parent() }}
+    </div>
+  </div> <!-- closing row from left column -->
+{% endblock %} 
+
+{% block rightColumnSection %}
+  <table class="table table-responsive table-hover table-striped table-bordered"> 
+    <tr> 
+      <th>Kursnummer</th> 
+      <td>{{ course.number }}</td> 
+    </tr>
+    <tr> 
+      <th>Kursleitung</th> 
+      <td>{{ course.user.firstName }} {{ course.user.name }}</td> 
+    </tr>
+    <tr> 
+      <th>Kategorie</th> 
+      <td>{{ course.category.name }}</td> 
+    </tr>
+    <tr> 
+      <th>Für wen?</th> 
+      <td>{{ course.targetGroup }}</td> 
+    </tr>
+    <tr> 
+      <th>Wo?</th> 
+      <td>{{ course.place }}</td> 
+    </tr>
+    <tr> 
+      <th>Gebühr</th> 
+      <td>{{ course.price }} Euro</td> 
+    </tr>
+    <tr> 
+      <th>Termine</th> 
+      <td>
+        {% for date in course.dates %}
+          {{ date.date|date("d.M.Y") }} von 
+          {{ date.start|date("H:i") }} Uhr bis 
+          {{ date.end|date("H:i") }} Uhr 
+          <br>
+        {% endfor %}
+      </td> 
+    </tr>
+  </table>
+{% endblock %} 
+
+
+{% block wholeColumn %} 
+  <!-- leave it empty as it is not used -->
+{% endblock %}
+
+
+{% block table %}
+  <!-- leave it empty as it is not used -->
+{% endblock %}
+

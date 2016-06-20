@@ -1,0 +1,104 @@
+{% extends "base.html.twig" %}
+
+{% block pageTitle %}
+  <h1>Neuen Kurs anlegen</h1>
+  <h2>Bitte füllen Sie das Formular aus</h2>
+{% endblock %} 
+
+{% block wholeColumn %} 
+   <div class="row">
+    <div class="col-sm-12 col-md-12">
+      {{ parent() }}
+    </div>
+  </div>   
+{% endblock %}
+
+{% block wholeColumnSection %} 
+  <div class="jumbotron">
+    {% form_theme form 'bootstrap_3_layout.html.twig' %}
+      {{ form_start(form) }}
+
+    <div class="row">
+      <div class="col-sm-12 col-md-8">
+        {{ form_label(form.name) }}
+        {{ form_widget(form.name) }}
+        {{ form_errors(form.name) }}
+      </div>
+      <div class="col-sm-12 col-md-4">
+        {{ form_label(form.number) }}
+        {{ form_errors(form.number) }}
+        {{ form_widget(form.number) }}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 col-md-5">
+        {{ form_label(form.targetGroup) }}
+        {{ form_errors(form.targetGroup) }}
+        {{ form_widget(form.targetGroup) }}
+      </div>
+      <div class="col-sm-12 col-md-3">
+        {{ form_label(form.price) }}
+        {{ form_errors(form.price) }}
+        {{ form_widget(form.price) }}
+      </div>
+        <div class="col-sm-12 col-md-4">
+        {{ form_label(form.place) }}
+        {{ form_errors(form.place) }}
+        {{ form_widget(form.place) }}
+      </div>
+    </div>
+     <div class="row">
+      <div class="col-sm-12 col-md-8">
+        {{ form_label(form.description) }}
+        {{ form_errors(form.description) }}
+        {{ form_widget(form.description) }}
+      </div>
+      <div class="col-sm-12 col-md-2">
+        {{ form_label(form.category) }}
+        {{ form_errors(form.category) }}
+        {{ form_widget(form.category) }}
+      </div>
+      <div class="col-sm-12 col-md-2">
+        {{ form_label(form.availablePlaces) }}
+        {{ form_errors(form.availablePlaces) }}
+        {{ form_widget(form.availablePlaces) }}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 col-md-12">
+        <h3>Termine</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 col-md-4">
+        {# iterate over each existing tag and render its only field: name #}
+        {% for date in form.dates %}
+          {{ form_label(date.date) }} {{ form_label(date.start) }}
+          {{ form_errors(date.date) }}
+          {{ form_widget(date.date) }}
+        {% endfor %}
+      </div>
+      <div class="col-sm-12 col-md-4">
+      {# iterate over each existing tag and render its only field: name #}
+        {% for date in form.dates %}
+          {{ form_label(date.start) }}
+          {{ form_errors(date.start) }}
+          {{ form_widget(date.start) }}
+        {% endfor %}
+      </div>
+      <div class="col-sm-12 col-md-4">
+      {# iterate over each existing tag and render its only field: name #}
+        {% for date in form.dates %}
+          {{ form_label(date.end) }}
+          {{ form_errors(date.end) }}
+          {{ form_widget(date.end) }}
+        {% endfor %}
+      </div>
+    </div><!-- closing row -->
+    {{ form_end(form) }}   
+  </div><!-- close jumbotron -->
+{% endblock %} 
+
+
+
+

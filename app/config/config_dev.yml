@@ -1,0 +1,89 @@
+imports:
+    - { resource: config.yml }
+
+framework:
+    router:
+        resource: "%kernel.root_dir%/config/routing_dev.yml"
+        strict_requirements: true
+    profiler: { only_exceptions: false }
+
+web_profiler:
+    toolbar: true
+    intercept_redirects: false
+
+
+services:
+    my_formatter:
+        class: Monolog\Formatter\JsonFormatter
+
+monolog:
+    handlers:
+        main:
+            type:         fingers_crossed
+            action_level: debug
+            handler:      grouped
+        grouped:
+            type:    group
+            members: [rotating, buffered]
+        rotating:
+            type:  rotating_file
+            path:  '%kernel.logs_dir%/%kernel.environment%.log'
+            # max number of log files to keep
+            # defaults to zero, which means infinite files
+            max_files: 10
+            level: debug
+        buffered:
+            type:    buffer
+            handler: swift
+        swift:
+            type:       swift_mailer
+            from_email: 'sylvia.klatt@gmail.com'
+            to_email:   'sylvia.klatt@gmail.com'
+            subject:    Website Error
+            level:      error
+        #file:
+        #    type: stream
+        #    level: debug
+        #    formatter: my_formatter
+        #main:
+        #    type:  rotating_file
+        #    path:  '%kernel.logs_dir%/%kernel.environment%.log'
+        #    level: debug
+        #    # max number of log files to keep
+        #    # defaults to zero, which means infinite files
+        #    max_files: 10
+        #    #type: stream
+        #    path: "%kernel.logs_dir%/%kernel.environment%.log"
+        #    #level: debug
+        #    #channels: [!event]
+        #console:
+        #    type:   console
+        #    channels: [!event, !doctrine]
+        #applog:
+        #    type: stream
+        #    path: /var/log/symfony.log
+        #    level: error
+        #main:
+        #    type: fingers_crossed
+        #    action_level: warning
+        #    handler: file
+        #file:
+        #    level: debug
+        #    type:  rotating_file
+        #    path:  '%kernel.logs_dir%/%kernel.environment%.log'
+        #    max_files: 10
+        #    formatter: my_formatter
+        #syslog:
+        #    type: syslog
+        #    level: error
+        # uncomment to get logging in your browser
+        # you may have to allow bigger header sizes in your Web server configuration
+        #firephp:
+        #    type:   firephp
+        #    level:  info
+        #chromephp:
+        #    type:   chromephp
+        #    level:  info
+
+#swiftmailer:
+#    delivery_address: me@example.com

@@ -1,0 +1,77 @@
+{% extends "base.html.twig" %}
+
+{% block pageTitle %}
+  {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+    <h1>Herzlich Willkommen {{ app.user.firstName }} {{ app.user.name }} </h1>
+  {% endif %}
+{% endblock %} 
+
+{% block leftColumn %}
+{% endblock leftColumn %}
+  
+{% block leftColumnSection %} <!-- decription goes in here -->
+{% endblock %} 
+  
+{% block rightColumn %} <!-- deviding page for layout purposes -->
+{% endblock %} 
+
+{% block rightColumnSection %}
+{% endblock %}
+
+{% block wholeColumn %} 
+   <div class="row">
+    <div class="col-sm-12">
+      {{ parent() }}
+    </div>
+  </div>   
+{% endblock %}
+
+{% block foundCourses %}
+  <h2> Es wurden {{ courses|length }} Kurse gefunden. </h2>
+{% endblock %} 
+
+
+
+{% block wholeColumnSection %}
+  <div class="pull-right"> 
+    <a href="{{ path('user_new_course') }}" class="btn btn-primary">Neuen Kurs anlegen</a>
+  </div>
+  <table class="table table-responsive table-hover table-striped table-bordered"> 
+    {{ parent() }}
+  </table>
+{% endblock %}
+
+{% block tableHeader %}
+  <tr> 
+    <th>Kursnummer</th> 
+    <th>Kursname</th> 
+    <th>Erster Kurstermin</th> 
+    <th>Teilnehmer</th> 
+    <th></th>
+    
+  </tr>
+{% endblock %}
+
+{% block tableBody %}  <!-- table showing available courses by Category -->
+  <!-- fetching course data from array -->
+  {% for course in courses %}
+    <tr>
+      <td>
+        {{ course.number }}
+       </td>
+      <td>
+        {{ course.name }}
+       </td>
+      <td>
+        {{ course.dates|first.date|date("d.m.Y") }}
+      </td>
+      <td>{{ course.booked }}</td> 
+      <td>
+        <button type="button" class="btn btn-success">Ansehen</button>
+        <button type="button" class="btn btn-default">Bearbeiten</button>
+        <button type="button" class="btn btn-danger">Löschen</button>
+      </td>
+    </tr> 
+  {% endfor %}
+{% endblock %} 
+     
